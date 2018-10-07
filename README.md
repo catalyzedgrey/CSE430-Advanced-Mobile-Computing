@@ -4,4 +4,4 @@ Currency Rate Converter App (only from USD to EGP and vise versa with a static r
 Using the following static rate:  
 USD = 17.6 * EGP;  
 EGP = USD / 17.6;  
-![alt text](\Lab01\lab01.jpg)
+<img src="/Lab01/lab01.jpg" width="432" height="768" />

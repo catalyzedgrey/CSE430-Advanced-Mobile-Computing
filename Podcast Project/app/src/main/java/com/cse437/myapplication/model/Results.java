@@ -1,0 +1,39 @@
+package com.cse437.myapplication.model;
+
+import com.cse437.myapplication.model.Podcasts;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Results {
+    @SerializedName("resultCount")
+    @Expose
+    private Integer resultCount;
+    @SerializedName("results")
+    @Expose
+    private List<Podcasts> results;
+
+
+
+    public Results(){
+        results = new ArrayList<>();
+    }
+
+    public Integer getResultCount() {
+        return resultCount;
+    }
+
+    public void setResultCount(Integer resultCount) {
+        this.resultCount = resultCount;
+    }
+
+    public List<Podcasts> getResults() {
+        return results;
+    }
+
+    public void setResults(List<Podcasts> results) {
+        this.results = results;
+    }
+}

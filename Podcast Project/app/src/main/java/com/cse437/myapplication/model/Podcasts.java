@@ -18,6 +18,9 @@ public class Podcasts {
     @SerializedName("trackCount")
     @Expose
     private Integer trackCount;
+    @SerializedName("collectionName")
+    @Expose
+    private String collectionName;
 
     public Podcasts(String name, String feedURL){
         this.artistName = name;
@@ -52,6 +55,14 @@ public class Podcasts {
 
     public void setTrackCount(Integer trackCount) {
         this.trackCount = trackCount;
+    }
+
+    public String getCollectionName() {
+        return collectionName;
+    }
+
+    public void setCollectionName(String collectionName) {
+        this.collectionName = collectionName;
     }
 
 

@@ -19,9 +19,7 @@ import java.util.ArrayList;
 public class EpisodeCustomAdapter extends ArrayAdapter<Episode> {
 
     public EpisodeCustomAdapter(Context context, ArrayList<Episode> details) {
-
         super(context, 0, details);
-
     }
 
 

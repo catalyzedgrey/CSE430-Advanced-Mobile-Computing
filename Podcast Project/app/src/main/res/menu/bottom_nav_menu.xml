@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/action_pod"
+        android:title="Podcasts"
+        android:icon="@drawable/ic_grid"
+        />
+
+    <item android:id="@+id/action_search"
+        android:title="Search"
+        android:icon="@drawable/ic_search" />
+
+    <item android:id="@+id/action_settings"
+        android:title="Settings"
+        android:icon="@drawable/ic_settings" />
+</menu>

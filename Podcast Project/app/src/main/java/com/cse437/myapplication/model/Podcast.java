@@ -1,11 +1,11 @@
 package com.cse437.myapplication.model;
 
-import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Podcasts {
+public class Podcast {
     @SerializedName("artistName")
     @Expose
     private String artistName;
@@ -22,9 +22,17 @@ public class Podcasts {
     @Expose
     private String collectionName;
 
-    public Podcasts(String name, String feedURL){
+    private Drawable img;
+
+    public Podcast(String name, String feedURL){
         this.artistName = name;
         this.feedUrl = feedURL;
+    }
+    public Podcast(String name, String feedURL, String albumArt){
+        this.artistName = name;
+        this.feedUrl = feedURL;
+        this.artworkUrl600 = albumArt;
+
     }
 
     public String getArtistName() {
@@ -65,5 +73,8 @@ public class Podcasts {
         this.collectionName = collectionName;
     }
 
+    public Drawable getImg(){return this.img;}
+
+    public void setImg(Drawable img) {this.img = img;}
 
 }

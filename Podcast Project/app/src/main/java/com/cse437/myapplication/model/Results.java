@@ -1,6 +1,5 @@
 package com.cse437.myapplication.model;
 
-import com.cse437.myapplication.model.Podcasts;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -13,7 +12,7 @@ public class Results {
     private Integer resultCount;
     @SerializedName("results")
     @Expose
-    private List<Podcasts> results;
+    private List<Podcast> results;
 
 
 
@@ -29,11 +28,11 @@ public class Results {
         this.resultCount = resultCount;
     }
 
-    public List<Podcasts> getResults() {
+    public List<Podcast> getResults() {
         return results;
     }
 
-    public void setResults(List<Podcasts> results) {
+    public void setResults(List<Podcast> results) {
         this.results = results;
     }
 }

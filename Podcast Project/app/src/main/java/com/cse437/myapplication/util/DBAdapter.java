@@ -22,17 +22,23 @@ public class DBAdapter  {
     // [TO_DO_A2]
     // TODO: Change the field names (column names) of your table
 
-    public static final String PODCAST_NAME = "name";
-    public static final String PODCAST_URL = "studentnum";
+    public static final String PODCAST_NAME = "artistName";
+    public static final String PODCAST_URL = "feedUrl";
+    public static final String ARTWORK_URL = "artUrl";
+    public static final String IMAGE = "image";
+
+
 
     // [TO_DO_A3]
     // Update the field numbers here (0 = KEY_ROWID, 1=...)
     public static final int COL_NAME = 1;
     public static final int COL_URL = 2;
+    public static final int ART_URL = 3;
+    public static final int COL_IMAGE = 4;
 
     // [TO_DO_A4]
     // Update the ALL-KEYS string array
-    public static final String[] ALL_KEYS = new String[] {KEY_ROWID, PODCAST_NAME, PODCAST_URL};
+    public static final String[] ALL_KEYS = new String[] {KEY_ROWID, PODCAST_NAME, PODCAST_URL, ARTWORK_URL, IMAGE};
 
     // [TO_DO_A5]
     // DB info: db name and table name.
@@ -49,8 +55,10 @@ public class DBAdapter  {
     private static final String DATABASE_CREATE_SQL =
             "create table " + DATABASE_TABLE
                     + " (" + KEY_ROWID + " integer primary key autoincrement, "
-                    + PODCAST_NAME         + " text not null, "
-                    + PODCAST_URL    + " string not null"
+                    + PODCAST_NAME         + " string not null, "
+                    + PODCAST_URL    + " string not null,"
+                    + ARTWORK_URL + " string not null,"
+                    + IMAGE  + " BLOB"
                     + ");";
 
     // Context of application who uses us.
@@ -80,7 +88,7 @@ public class DBAdapter  {
     }
 
     // Add a new set of values to the database.
-    public long insertRow(String podName, String podFeed) {
+    public long insertRow(String podName, String podFeed, String artFeed, byte[] image) {
         // [TO_DO_A8]
         // Update data in the row with new fields.
         // Also change the function's arguments to be what you need!
@@ -88,6 +96,8 @@ public class DBAdapter  {
         ContentValues initialValues = new ContentValues();
         initialValues.put(PODCAST_NAME, podName);
         initialValues.put(PODCAST_URL, podFeed);
+        initialValues.put(ARTWORK_URL, artFeed);
+        initialValues.put(IMAGE, image);
 
         // Insert it into the database.
         return db.insert(DATABASE_TABLE, null, initialValues);

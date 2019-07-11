@@ -4,13 +4,12 @@ import android.util.Xml;
 
 import com.cse437.myapplication.model.Episode;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
 
 public class XMLParser {
 
@@ -47,12 +46,7 @@ public class XMLParser {
         return entries;
     }
 
-    //    class Channel{
-//        String item;
-//        public Channel(String item){
-//            this.item = item;
-//        }
-//    }
+
     private ArrayList<Episode> readItem(XmlPullParser parser) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, "channel");
         ArrayList<Episode> epArrayList = new ArrayList<>();

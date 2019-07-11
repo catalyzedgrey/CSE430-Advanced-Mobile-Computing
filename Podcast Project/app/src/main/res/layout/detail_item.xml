@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="5"
+        android:layout_weight="7"
         android:layout_marginLeft="15dp"
         android:orientation="vertical">
 
@@ -45,6 +45,7 @@
         <!--android:layout_margin="15dp"-->
         <!--android:text="Timestamp" />-->
     <ImageView
+        android:padding="5dp"
         android:id="@+id/play_det_btn"
         android:src="@drawable/play"
         android:layout_width="0dp"

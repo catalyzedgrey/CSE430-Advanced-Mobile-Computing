@@ -1,5 +1,6 @@
 package com.cse437.myapplication.view;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,9 +15,8 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.cse437.myapplication.R;
-import com.cse437.myapplication.model.Podcasts;
+import com.cse437.myapplication.model.Podcast;
 import com.cse437.myapplication.model.Results;
-import com.cse437.myapplication.util.PodcastCustomAdapter;
 import com.cse437.myapplication.util.SearchCustomAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -35,17 +35,51 @@ public class SearchFragment extends Fragment {
     SearchView searchView;
 
     String queryHalf1 = "https://itunes.apple.com/search?term=";
-    String queryhalf2 = "&country=us&entity=podcast&limit=25";
+    String queryhalf2 = "&country=us&entity=podcast&limit=20";
+
+
+    List<Podcast> podcasts;
+    SearchCustomAdapter searchAdapter;
+
+
+    OnEpisodesLoaded mCallback;
+
+    public interface OnEpisodesLoaded{
+        public void onEpisodeAdded(Podcast podcast);
+    }
+
+    public void setOnEpisodesLoaded(Activity activity){
+        mCallback = (OnEpisodesLoaded) activity;
+    }
+
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_search, container, false);
+        View view = inflater.inflate(R.layout.fragment_search, container, false);
+
+        podcasts = new ArrayList<Podcast>();
+
+        searchResLV = view.findViewById(R.id.search_res_lv);
+        searchAdapter = new SearchCustomAdapter(getActivity(), podcasts);
+        searchResLV.setAdapter(searchAdapter);
+
+        searchResLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Podcast pod = (Podcast) parent.getAdapter().getItem(position);
+                mCallback.onEpisodeAdded(pod);
+            }
+        });
+
+        return view;
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        searchResLV = view.findViewById(R.id.search_res_lv);
+
         searchView = view.findViewById(R.id.search_view);
 
         searchView.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +93,8 @@ public class SearchFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 try {
-                    new Test().execute(new URL(queryHalf1+s+queryhalf2));
+                    new Test().execute(new URL(queryHalf1 + s + queryhalf2));
+
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
@@ -71,7 +106,10 @@ public class SearchFragment extends Fragment {
                 return false;
             }
         });
+
+
     }
+
 
     class Test extends AsyncTask<URL, Void, Void> {
         String s = "";
@@ -107,35 +145,23 @@ public class SearchFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             Results res = parseJSON(s);
-           // final List<Podcasts> podcasts = new ArrayList<Podcasts>();
-            List<Podcasts> podcasts = res.getResults();
+            // final List<Podcast> podcasts = new ArrayList<Podcast>();
+            podcasts = res.getResults();
+            searchAdapter.clear();
+            searchAdapter.addAll(podcasts);
+            searchAdapter.notifyDataSetChanged();
+
 //            podcasts.add(res.getResults().get(0));
-            SearchCustomAdapter searchAdapter = new SearchCustomAdapter(getActivity(), podcasts);
-            searchResLV.setAdapter(searchAdapter);
-            searchResLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-//                Toast.makeText(getActivity(), "ggg", Toast.LENGTH_LONG).show();
-//                fragmentManager = getFragmentManager();
+//            searchResLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //
-                    EpisodeFragment f = new EpisodeFragment();
-////                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-////                fragmentTransaction.add(findViewById(R.id.main_frag), f, "f");
+//                    Toast.makeText(getActivity(), "ggg", Toast.LENGTH_LONG).show();
+//                    mCallback.onEpisodeAdded(pod);;
 //
-//                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-//                transaction.add(R.id.main_frag, f).commit();
-//                transaction.commit();
-
-                    //uncomment this
-                    //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frag, f).commit();
-
-
-
-                    //fragmentTransaction.commit();
-
-                }
-            });
+//                }
+//            });
             //*tv.setText(s);
         }
 

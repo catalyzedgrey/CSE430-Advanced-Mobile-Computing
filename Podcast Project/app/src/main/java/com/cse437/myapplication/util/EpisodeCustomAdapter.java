@@ -1,15 +1,12 @@
 package com.cse437.myapplication.util;
 
 import android.content.Context;
-import android.content.Intent;
-import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cse437.myapplication.R;
 import com.cse437.myapplication.model.Episode;
@@ -17,9 +14,11 @@ import com.cse437.myapplication.model.Episode;
 import java.util.ArrayList;
 
 public class EpisodeCustomAdapter extends ArrayAdapter<Episode> {
+    private int totalLength =0;
 
     public EpisodeCustomAdapter(Context context, ArrayList<Episode> details) {
         super(context, 0, details);
+        totalLength = details.size();
     }
 
 
@@ -47,7 +46,10 @@ public class EpisodeCustomAdapter extends ArrayAdapter<Episode> {
 
         TextView lengthTV = (TextView) convertView.findViewById(R.id.length_tv);
 
-        final ImageView img = (ImageView)  convertView.findViewById(R.id.play_det_btn);
+        final ImageView img = (ImageView) convertView.findViewById(R.id.play_det_btn);
+
+        epNumTV.setText(totalLength-position+"");
+
 
         //TextView lengthTV = (TextView) convertView.findViewById(R.id.length_tv);
 
@@ -55,40 +57,11 @@ public class EpisodeCustomAdapter extends ArrayAdapter<Episode> {
 
         nameTV.setText(episode.getTitle());
 
-        //epNumTV.setText(1+"");
 
-        lengthTV.setText((Integer.parseInt(episode.getLength())/60) + " min");
+        lengthTV.setText(episode.getLength());
 
         img.setImageResource(R.drawable.play);
 
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MediaPlayer mpAudio = AudioService.getMpAudio();
-                Toast.makeText(getContext(), "playing", Toast.LENGTH_LONG).show();
-                if(mpAudio != null){
-                    if(mpAudio.isPlaying()){
-                        mpAudio.pause();
-                        img.setImageResource(R.drawable.play);
-                    }else{
-                        mpAudio.start();
-                        img.setImageResource(R.drawable.pause);
-                    }
-                }else{
-                    getContext().startService(new Intent(getContext(), AudioService.class));
-                    img.setImageResource(R.drawable.pause);
-                }
-                //Intent i = new Intent(getContext(), AudioService.class);
-                //i.putExtra("sourceUrl", episode.getUrl());
-                //getContext().startService(i);
-
-            }
-        });
-
-        //lengthTV.setText(episode.getLength());
-
-
-        // Return the completed view to render on screen
 
         return convertView;
 

@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">My Podcast</string>
+    <string name="about">This is placeholder text. I wanted to do something else with this fragment, but I ran out of time. </string>
 </resources>
